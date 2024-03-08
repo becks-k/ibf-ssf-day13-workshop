@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+		<link rel="stylesheet" href="styles.css">
+	</head>
+	<body>
+
+		<!-- action refers to the POST method that is mapped to /todo -->
+		<form method="POST" action="/todo" th:object="${task}">
+		<table>
+			<tr>
+				<td>Task: </td>
+				<td>
+					<input type="text" name="task" size="30" th:field="*{task}">
+					<span th:if="${#fields.hasErrors('task')}"
+					th:each="err: ${#fields.errors('task')}"
+					th:text="${err}"
+					th:errorclass="error"
+					th:errors="*{task}">
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Priority: </td>
+				<td>
+					<select name="priority" th:field="*{priority}">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+					<span th:if="${#fields.hasErrors('priority')}"
+					th:each="err: ${#fields.errors('priority')}"
+					th:text="${err}"
+					th:errorclass="error"
+					th:errors="*{priority}">
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Due Date:</td>
+				<td>
+					<input type="date" name="dueDate" th:field="*{dueDate}">
+					<span th:if="${#fields.hasErrors('dueDate')}"
+					th:each="err: ${#fields.errors('dueDate')}"
+					th:text="${err}"
+					th:errorclass="error"
+					th:errors="*{dueDate}">
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<button type="submit">Add</button>
+					<button type="submit" formmethod="POST" formaction="/todo/clear">Clear</button>
+				</td>
+			</tr>
+		</table>
+		</form>
+	
+
+		<table>
+			<thead>
+				<tr>
+					<th>Task</th>
+					<th>Priority</th>
+					<th>Due Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="t: ${taskList}">
+					<td th:text="${t.task}"> The task </td>
+					<td th:text="${t.priority}"> 3 </td>
+					<td th:text="${t.dueDate}"> due date here</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>
